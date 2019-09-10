@@ -1,7 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2074564f-3c13-4450-b2b6-cac171f757fc" name="Default Changelist" comment="" />
+    <list default="true" id="2074564f-3c13-4450-b2b6-cac171f757fc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/app.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/app_dialog.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/dialog.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/cancel.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/color-line.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/color.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/copy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/delete.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/done.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/done.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/draw-polygon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/edit.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/expert.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/eye.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/feBlend-icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/file.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/fit-width.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/fit-window.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/fit.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/help.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/icon.icns" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/icon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/labels.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/labels.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/new.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/next.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/objects.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/open.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/open.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/prev.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/quit.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/save-as.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/save-as.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/save.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/save.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/undo-cross.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/undo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/zoom-in.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/zoom-out.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/icons/zoom.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/imgLabel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/mainwindow.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/lib/labelseg/util.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/labelseg-0.0.1-py3-none-any.whl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/labelseg-0.0.1.tar.gz" beforeDir="false" afterPath="$PROJECT_DIR$/dist/labelseg-0.0.1.tar.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg.egg-info/PKG-INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg.egg-info/SOURCES.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg.egg-info/dependency_links.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg.egg-info/entry_points.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg.egg-info/requires.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg.egg-info/top_level.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/labelseg/app.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,7 +72,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1PxKiR5DPmdmvtrvrLpef0xQcVX" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -74,24 +135,37 @@
       <updated>1566810433666</updated>
       <workItem from="1566810443369" duration="116000" />
       <workItem from="1566810798513" duration="8488000" />
+      <workItem from="1567518533086" duration="99000" />
+      <workItem from="1568080203807" duration="5070000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/labelseg/app.py</url>
-          <line>360</line>
-          <option name="timeStamp" value="1" />
+          <line>309</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/labelseg$app.coverage" NAME="app Coverage Results" MODIFIED="1566871212774" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/labelseg" />
+    <SUITE FILE_PATH="coverage/labelseg$app.coverage" NAME="app Coverage Results" MODIFIED="1568083384438" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/labelseg" />
   </component>
 </project>

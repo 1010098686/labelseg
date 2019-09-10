@@ -308,7 +308,10 @@ class AppWindow(QMainWindow):
     def show_pic(self, file_name=None, content=None):
         if file_name is not None:
             file_name = str(file_name.absolute())
-            img = cv.imread(file_name)
+            # img = cv.imread(file_name)
+            img = cv.imdecode(np.fromfile(file_name, dtype=np.uint8), -1)
+            img = cv.cvtColor(img, cv.COLOR_GRAY2RGB)
+            assert img is not None
             height, width, channel = img.shape
             self.cur_img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
             self.origin_img = self.cur_img
