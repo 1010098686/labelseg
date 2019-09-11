@@ -310,8 +310,9 @@ class AppWindow(QMainWindow):
             file_name = str(file_name.absolute())
             # img = cv.imread(file_name)
             img = cv.imdecode(np.fromfile(file_name, dtype=np.uint8), -1)
-            img = cv.cvtColor(img, cv.COLOR_GRAY2RGB)
             assert img is not None
+            if len(img.shape) == 2:
+                img = cv.cvtColor(img, cv.COLOR_GRAY2BGR)
             height, width, channel = img.shape
             self.cur_img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
             self.origin_img = self.cur_img
@@ -349,6 +350,15 @@ class AppWindow(QMainWindow):
             self.ui.img_area.adjustSize()
 
     def open_file(self, checked):
+        if self.modified and not self.saved:
+            res = QMessageBox.warning(
+                self,
+                'warning',
+                'Changes not saved, do you want to save?',
+                QMessageBox.Ok | QMessageBox.No,
+                QMessageBox.Ok)
+            if res == QMessageBox.Ok:
+                self.save()
         filename, filetype = QFileDialog.getOpenFileName(
             self, '选取文件', '.', 'PNG Files(*.png);;JPG Files(*.jpg)')
         if filename == '':
@@ -361,6 +371,15 @@ class AppWindow(QMainWindow):
         self.refresh_list()
 
     def open_dir(self, checked):
+        if self.modified and not self.saved:
+            res = QMessageBox.warning(
+                self,
+                'warning',
+                'Changes not saved, do you want to save?',
+                QMessageBox.Ok | QMessageBox.No,
+                QMessageBox.Ok)
+            if res == QMessageBox.Ok:
+                self.save()
         opened_dir = QFileDialog.getExistingDirectory(self, '打开文件夹', '.')
         if opened_dir == '':
             return
