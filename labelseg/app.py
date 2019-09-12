@@ -23,6 +23,8 @@ class OPEN_MODE(Enum):
 class STATE(Enum):
     NORMAL = 1
     DRAW_POLYGON = 2
+    DRAW_RECTANGLE = 3
+    DRAW_ELLIPSE = 4
 
 
 class AppWindow(QMainWindow):
@@ -52,6 +54,7 @@ class AppWindow(QMainWindow):
         self.state = STATE.NORMAL
         self.start_point = None
         self.end_point = None
+        self.polygon_points = None
         self.modified = False
         self.saved = False
 
@@ -76,6 +79,7 @@ class AppWindow(QMainWindow):
         self.ui.actionCreate_Polygon.setChecked(False)
         self.start_point = None
         self.end_point = None
+        self.polygon_points = None
         self.modified = False
         self.saved = False
 
@@ -90,9 +94,11 @@ class AppWindow(QMainWindow):
         self.ui.img_area.mouse_release.connect(self.mouse_release)
         self.ui.actionfill_color.triggered.connect(self.set_fill_color)
         self.ui.actionSet_Pixel_Range.triggered.connect(self.set_pixel_range)
-        self.ui.actionCreate_Polygon.triggered.connect(self.create_polygon)
         self.ui.actionUndo.triggered.connect(self.undo)
         self.ui.actionSave.triggered.connect(self.save)
+        self.ui.actionPolygon.triggered.connect(self.create_polygon)
+        self.ui.actionRectangle.triggered.connect(self.create_rectangle)
+        self.ui.actionEllipse.triggered.connect(self.create_ellipse)
 
     def save(self):
         name = str(self.selected_filename.absolute())
@@ -103,13 +109,25 @@ class AppWindow(QMainWindow):
         self.modified = False
 
     def undo(self, checked):
-        if len(self.histroty) == 0:
-            return
-        x, y = self.histroty.pop(-1)
-        self.labelimg[x, y] = 0
-        pic = self.draw_points()
-        self.show_pic(file_name=None, content=pic)
-        self.modified = True
+        if self.state == STATE.DRAW_POLYGON and self.polygon_points is not None and self.polygon_points['finish'] is False:
+            if len(self.polygon_points['points']) == 1:
+                self.polygon_points = None
+            elif len(self.polygon_points['points']) > 1:
+                self.polygon_points['points'].pop(-1)
+                self.draw_lines(self.polygon_points['points'], False)
+                if self.labelimg is not None:
+                    pic = self.draw_points()
+                    self.show_pic(file_name=None, content=pic)
+                else:
+                    self.show_pic(file_name=None, content=self.panel_pic)
+        else:
+            if len(self.histroty) == 0:
+                return
+            x, y = self.histroty.pop(-1)
+            self.labelimg[x, y] = 0
+            pic = self.draw_points()
+            self.show_pic(file_name=None, content=pic)
+            self.modified = True
 
     def set_fill_color(self, checked):
         color = QColorDialog.getColor()
@@ -125,6 +143,18 @@ class AppWindow(QMainWindow):
 
     def create_polygon(self, checked):
         self.state = STATE.DRAW_POLYGON
+        self.ui.actionEllipse.setChecked(False)
+        self.ui.actionRectangle.setChecked(False)
+
+    def create_rectangle(self, checked):
+        self.state = STATE.DRAW_RECTANGLE
+        self.ui.actionEllipse.setChecked(False)
+        self.ui.actionPolygon.setChecked(False)
+
+    def create_ellipse(self, checked):
+        self.state = STATE.DRAW_ELLIPSE
+        self.ui.actionPolygon.setChecked(False)
+        self.ui.actionRectangle.setChecked(False)
 
     def pos_in_img_area(self, pos: PyQt5.QtCore.QPoint):
         if self.cur_img is None:
@@ -151,10 +181,35 @@ class AppWindow(QMainWindow):
             self.logger.debug(valid)
             if valid:
                 self.logger.debug(relative_pos)
-                self.start_point = (
+                point = (
                     int(relative_pos[0] / self.scale), int(relative_pos[1] / self.scale))
-                self.end_point = None
-                self.logger.debug(self.start_point)
+                if self.state == STATE.DRAW_RECTANGLE:
+                    self.start_point = point
+                    self.end_point = None
+                    self.logger.debug(self.start_point)
+                elif self.state == STATE.DRAW_POLYGON:
+                    if self.polygon_points is None or self.polygon_points['finish'] is True:
+                        self.polygon_points = {'finish': False, 'points': [point]}
+                    else:
+                        p1 = np.array([self.polygon_points['points'][0][0] * self.scale, self.polygon_points['points'][0][1] * self.scale])
+                        p2 = np.array([point[0] * self.scale, point[1] * self.scale])
+                        dis = np.linalg.norm(p1 - p2, 2)
+                        if dis < 5:
+                            self.polygon_points['finish'] = True
+                            self.draw_lines(self.polygon_points['points'], True)
+                        else:
+                            self.polygon_points['points'].append(point)
+                            self.draw_lines(self.polygon_points['points'], False)
+                        if self.labelimg is not None:
+                            pic = self.draw_points()
+                            self.show_pic(file_name=None, content=pic)
+                        else:
+                            self.show_pic(file_name=None, content=self.panel_pic)
+                elif self.state == STATE.DRAW_ELLIPSE:
+                    # TODO: draw ellipse
+                    pass
+                else:
+                    raise NotImplementedError()
         elif ev.button() == Qt.RightButton:
             pass
 
@@ -166,12 +221,34 @@ class AppWindow(QMainWindow):
         if valid:
             relative_pos = (
                 int(relative_pos[0] / self.scale), int(relative_pos[1] / self.scale))
-            self.draw_rect(self.start_point, relative_pos)
+            if self.state == STATE.DRAW_RECTANGLE:
+                self.draw_rect(self.start_point, relative_pos)
+            elif self.state == STATE.DRAW_POLYGON:
+                pass
+            elif self.state == STATE.DRAW_ELLIPSE:
+                # TODO draw ellipse
+                pass
+            else:
+                raise NotImplementedError()
             if self.labelimg is not None:
                 pic = self.draw_points()
                 self.show_pic(file_name=None, content=pic)
             else:
                 self.show_pic(file_name=None, content=self.panel_pic)
+
+    def draw_ellipse(self, start_point, end_point):
+        pass
+
+    def draw_lines(self, points, end=False):
+        b, g, r = self.fill_color.blue(), self.fill_color.green(), self.fill_color.red()
+        temp_img = self.cur_img.copy()
+        points = list(map(lambda item:(int(item[0] * self.scale), int(item[1] * self.scale)), points))
+        for i in range(len(points) - 1):
+            temp_img = cv.line(temp_img, points[i], points[i+1], (r, g, b), 1)
+        if end:
+            temp_img = cv.line(temp_img, points[-1], points[0], (r, g, b), 1)
+        self.panel_pic = temp_img
+
 
     def draw_rect(self, start_point, end_point):
         b, g, r = self.fill_color.blue(), self.fill_color.green(), self.fill_color.red()
@@ -198,34 +275,66 @@ class AppWindow(QMainWindow):
         if self.state == STATE.NORMAL:
             return
         if ev.button() == Qt.LeftButton:
-            pos = ev.pos()
-            valid, relative_pos = self.pos_in_img_area(pos)
-            self.logger.debug(valid)
-            if valid:
-                self.logger.debug(relative_pos)
-                self.end_point = (
-                    int(relative_pos[0] / self.scale), int(relative_pos[1] / self.scale))
+            if self.state == STATE.DRAW_RECTANGLE:
+                pos = ev.pos()
+                valid, relative_pos = self.pos_in_img_area(pos)
+                self.logger.debug(valid)
+                if valid:
+                    self.logger.debug(relative_pos)
+                    self.end_point = (
+                        int(relative_pos[0] / self.scale), int(relative_pos[1] / self.scale))
         elif ev.button() == Qt.RightButton:
-            if self.start_point is None or self.end_point is None:
+            if self.state == STATE.NORMAL:
                 return
-            pos = ev.pos()
-            valid, relative_pos = self.pos_in_img_area(pos)
-            if valid:
-                click_pos = (
-                    int(relative_pos[0] / self.scale), int(relative_pos[1] / self.scale))
-                self.logger.debug(click_pos)
-                if self.start_point[0] <= click_pos[0] <= self.end_point[
-                        0] and self.start_point[1] <= click_pos[1] <= self.end_point[1]:
-                    pixel_value = self.origin_img[click_pos[1],
-                                                  click_pos[0], 0]
-                    low, high = pixel_value + \
-                        self.pixel_range[0], pixel_value + self.pixel_range[1]
-                    selected_area = self.origin_img[self.start_point[1]
-                        : self.end_point[1], self.start_point[0]: self.end_point[0], 0]
-                    x, y = np.where((selected_area >= low) *
-                                    (selected_area <= high))
-                    x = x + self.start_point[1]
-                    y = y + self.start_point[0]
+            if self.state == STATE.DRAW_RECTANGLE:
+                if self.start_point is None or self.end_point is None:
+                    return
+                pos = ev.pos()
+                valid, relative_pos = self.pos_in_img_area(pos)
+                if valid:
+                    click_pos = (
+                        int(relative_pos[0] / self.scale), int(relative_pos[1] / self.scale))
+                    min_x, max_x = min(self.start_point[0], self.end_point[0]), max(self.start_point[0], self.end_point[0])
+                    min_y, max_y = min(self.start_point[1], self.end_point[1]), max(self.start_point[1], self.end_point[1])
+                    self.logger.debug(click_pos)
+                    if min_x <= click_pos[0] <= max_x and min_y <= click_pos[1] <= max_y:
+                        pixel_value = self.origin_img[click_pos[1],
+                                                      click_pos[0], 0]
+                        low, high = pixel_value + \
+                            self.pixel_range[0], pixel_value + self.pixel_range[1]
+                        selected_area = self.origin_img[min_y: max_y + 1, min_x: max_x + 1, 0]
+                        x, y = np.where((selected_area >= low) *
+                                        (selected_area <= high))
+                        x = x + min_y
+                        y = y + min_x
+                        self.labelimg[x, y] = 1
+                        pic = self.draw_points()
+                        self.show_pic(file_name=None, content=pic)
+                        self.histroty.append((x, y))
+                        self.modified = True
+            elif self.state == STATE.DRAW_POLYGON:
+                if self.polygon_points is None or self.polygon_points['finish'] is False:
+                    return
+                pos = ev.pos()
+                valid, relative_pos = self.pos_in_img_area(pos)
+                if valid:
+                    click_pos = (int(relative_pos[0] / self.scale), int(relative_pos[1] / self.scale))
+                    self.logger.debug(click_pos)
+                    x_pos = np.array([item[0] for item in self.polygon_points['points']])
+                    y_pos = np.array([item[1] for item in self.polygon_points['points']])
+                    min_x, max_x = x_pos.min(), x_pos.max()
+                    min_y, max_y = y_pos.min(), y_pos.max()
+                    p = np.array(self.polygon_points['points']).reshape([1, len(self.polygon_points['points']), 2])
+                    p[0, :, 0] -= min_x
+                    p[0, :, 1] -= min_y
+                    mask = np.zeros([max_y - min_y + 1, max_x - min_x + 1], np.uint8)
+                    mask = cv.fillPoly(mask, p, 1)
+                    pixel_value = self.origin_img[click_pos[1], click_pos[0], 0]
+                    low, high = pixel_value + self.pixel_range[0], pixel_value + self.pixel_range[1]
+                    selected_img = self.origin_img[min_y: max_y + 1, min_x: max_x + 1, 0]
+                    x, y = np.where((selected_img >= low) * (selected_img <= high) * mask)
+                    x = x + min_y
+                    y = y + min_x
                     self.labelimg[x, y] = 1
                     pic = self.draw_points()
                     self.show_pic(file_name=None, content=pic)
@@ -302,7 +411,9 @@ class AppWindow(QMainWindow):
         self.toolbar.addAction(self.ui.actionZoom_Out)
         self.toolbar.addAction(self.ui.actionfill_color)
         self.toolbar.addAction(self.ui.actionSet_Pixel_Range)
-        self.toolbar.addAction(self.ui.actionCreate_Polygon)
+        self.toolbar.addAction(self.ui.actionRectangle)
+        self.toolbar.addAction(self.ui.actionEllipse)
+        self.toolbar.addAction(self.ui.actionPolygon)
         self.toolbar.addAction(self.ui.actionUndo)
 
     def show_pic(self, file_name=None, content=None):

@@ -115,14 +115,21 @@
     <property name="title">
      <string>Edit</string>
     </property>
-    <addaction name="actionCreate_Polygon"/>
-    <addaction name="separator"/>
     <addaction name="actionSet_Pixel_Range"/>
     <addaction name="actionUndo"/>
+   </widget>
+   <widget class="QMenu" name="menuCreate_Shape">
+    <property name="title">
+     <string>Create Shape</string>
+    </property>
+    <addaction name="actionRectangle"/>
+    <addaction name="actionEllipse"/>
+    <addaction name="actionPolygon"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuCreate_Shape"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpen_File">
@@ -130,8 +137,8 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>icons/open.png</normaloff>icons/open.png</iconset>
+    <iconset resource="imgs.qrc">
+     <normaloff>:/icons/icons/open.png</normaloff>:/icons/icons/open.png</iconset>
    </property>
    <property name="text">
     <string>Open File</string>
@@ -139,8 +146,8 @@
   </action>
   <action name="actionOpen_Dir">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/open.png</normaloff>icons/open.png</iconset>
+    <iconset resource="imgs.qrc">
+     <normaloff>:/icons/icons/open.png</normaloff>:/icons/icons/open.png</iconset>
    </property>
    <property name="text">
     <string>Open Dir</string>
@@ -148,8 +155,8 @@
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/save.png</normaloff>icons/save.png</iconset>
+    <iconset resource="imgs.qrc">
+     <normaloff>:/icons/icons/save.png</normaloff>:/icons/icons/save.png</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -160,8 +167,8 @@
   </action>
   <action name="actionZoom_In">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/zoom-in.png</normaloff>icons/zoom-in.png</iconset>
+    <iconset resource="imgs.qrc">
+     <normaloff>:/icons/icons/zoom-in.png</normaloff>:/icons/icons/zoom-in.png</iconset>
    </property>
    <property name="text">
     <string>Zoom In</string>
@@ -169,8 +176,8 @@
   </action>
   <action name="actionZoom_Out">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/zoom-out.png</normaloff>icons/zoom-out.png</iconset>
+    <iconset resource="imgs.qrc">
+     <normaloff>:/icons/icons/zoom-out.png</normaloff>:/icons/icons/zoom-out.png</iconset>
    </property>
    <property name="text">
     <string>Zoom Out</string>
@@ -178,8 +185,8 @@
   </action>
   <action name="actionfill_color">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/color.png</normaloff>icons/color.png</iconset>
+    <iconset resource="imgs.qrc">
+     <normaloff>:/icons/icons/color.png</normaloff>:/icons/icons/color.png</iconset>
    </property>
    <property name="text">
     <string>Fill color</string>
@@ -199,8 +206,8 @@
   </action>
   <action name="actionSet_Pixel_Range">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/edit.png</normaloff>icons/edit.png</iconset>
+    <iconset resource="imgs.qrc">
+     <normaloff>:/icons/icons/edit.png</normaloff>:/icons/icons/edit.png</iconset>
    </property>
    <property name="text">
     <string>Set Pixel Range</string>
@@ -208,14 +215,50 @@
   </action>
   <action name="actionUndo">
    <property name="icon">
-    <iconset>
-     <normaloff>icons/undo.png</normaloff>icons/undo.png</iconset>
+    <iconset resource="imgs.qrc">
+     <normaloff>:/icons/icons/undo.png</normaloff>:/icons/icons/undo.png</iconset>
    </property>
    <property name="text">
     <string>Undo</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionRectangle">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="imgs.qrc">
+     <normaloff>:/icons/icons/rectangle.png</normaloff>:/icons/icons/rectangle.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rectangle</string>
+   </property>
+  </action>
+  <action name="actionEllipse">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="imgs.qrc">
+     <normaloff>:/icons/icons/ellipse.png</normaloff>:/icons/icons/ellipse.png</iconset>
+   </property>
+   <property name="text">
+    <string>Ellipse</string>
+   </property>
+  </action>
+  <action name="actionPolygon">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="imgs.qrc">
+     <normaloff>:/icons/icons/polygon.png</normaloff>:/icons/icons/polygon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Polygon</string>
    </property>
   </action>
  </widget>
@@ -226,6 +269,8 @@
    <header>imglabel.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="imgs.qrc"/>
+ </resources>
  <connections/>
 </ui>
