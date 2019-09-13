@@ -4,8 +4,38 @@
     <list default="true" id="2074564f-3c13-4450-b2b6-cac171f757fc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/labelseg/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/labelseg/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/labelseg/mainwindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/labelseg/mainwindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/labelseg/mainwindow.ui" beforeDir="false" afterPath="$PROJECT_DIR$/labelseg/mainwindow.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/cancel.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/color-line.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/copy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/delete.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/done.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/done.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/draw-polygon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/expert.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/eye.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/feBlend-icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/file.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/fit-width.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/fit-window.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/fit.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/help.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/icon.icns" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/icon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/labels.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/labels.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/new.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/next.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/objects.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/open.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/prev.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/quit.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/save-as.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/save-as.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/save.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/undo-cross.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labelseg/icons/zoom.png" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -87,7 +117,7 @@
       <workItem from="1568080203807" duration="5496000" />
       <workItem from="1568166968439" duration="963000" />
       <workItem from="1568169264419" duration="1168000" />
-      <workItem from="1568271406651" duration="11059000" />
+      <workItem from="1568271406651" duration="20058000" />
     </task>
     <servers />
   </component>
@@ -112,13 +142,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/labelseg/app.py</url>
-          <line>320</line>
-          <option name="timeStamp" value="7" />
+          <line>284</line>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/labelseg$app.coverage" NAME="app Coverage Results" MODIFIED="1568294293347" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/labelseg" />
+    <SUITE FILE_PATH="coverage/labelseg$app.coverage" NAME="app Coverage Results" MODIFIED="1568352087074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/labelseg" />
   </component>
 </project>

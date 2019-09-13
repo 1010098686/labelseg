@@ -55,6 +55,7 @@ class AppWindow(QMainWindow):
         self.start_point = None
         self.end_point = None
         self.polygon_points = None
+        self.ellipse_points = []
         self.modified = False
         self.saved = False
 
@@ -80,6 +81,7 @@ class AppWindow(QMainWindow):
         self.start_point = None
         self.end_point = None
         self.polygon_points = None
+        self.ellipse_points = None
         self.modified = False
         self.saved = False
 
@@ -142,19 +144,28 @@ class AppWindow(QMainWindow):
             self.logger.debug(self.pixel_range)
 
     def create_polygon(self, checked):
-        self.state = STATE.DRAW_POLYGON
-        self.ui.actionEllipse.setChecked(False)
-        self.ui.actionRectangle.setChecked(False)
+        if checked:
+            self.state = STATE.DRAW_POLYGON
+            self.ui.actionEllipse.setChecked(False)
+            self.ui.actionRectangle.setChecked(False)
+        else:
+            self.state = STATE.NORMAL
 
     def create_rectangle(self, checked):
-        self.state = STATE.DRAW_RECTANGLE
-        self.ui.actionEllipse.setChecked(False)
-        self.ui.actionPolygon.setChecked(False)
+        if checked:
+            self.state = STATE.DRAW_RECTANGLE
+            self.ui.actionEllipse.setChecked(False)
+            self.ui.actionPolygon.setChecked(False)
+        else:
+            self.state = STATE.NORMAL
 
     def create_ellipse(self, checked):
-        self.state = STATE.DRAW_ELLIPSE
-        self.ui.actionPolygon.setChecked(False)
-        self.ui.actionRectangle.setChecked(False)
+        if checked:
+            self.state = STATE.DRAW_ELLIPSE
+            self.ui.actionPolygon.setChecked(False)
+            self.ui.actionRectangle.setChecked(False)
+        else:
+            self.state = STATE.NORMAL
 
     def pos_in_img_area(self, pos: PyQt5.QtCore.QPoint):
         if self.cur_img is None:
@@ -194,7 +205,7 @@ class AppWindow(QMainWindow):
                         p1 = np.array([self.polygon_points['points'][0][0] * self.scale, self.polygon_points['points'][0][1] * self.scale])
                         p2 = np.array([point[0] * self.scale, point[1] * self.scale])
                         dis = np.linalg.norm(p1 - p2, 2)
-                        if dis < 5:
+                        if dis < 10:
                             self.polygon_points['finish'] = True
                             self.draw_lines(self.polygon_points['points'], True)
                         else:
@@ -206,8 +217,26 @@ class AppWindow(QMainWindow):
                         else:
                             self.show_pic(file_name=None, content=self.panel_pic)
                 elif self.state == STATE.DRAW_ELLIPSE:
-                    # TODO: draw ellipse
-                    pass
+                    if self.ellipse_points is None:
+                        self.ellipse_points = [point]
+                    elif len(self.ellipse_points) == 1:
+                        self.ellipse_points.append(point)
+                        self.draw_lines(self.ellipse_points, False)
+                        if self.labelimg is not None:
+                            pic = self.draw_points()
+                            self.show_pic(file_name=None, content=pic)
+                        else:
+                            self.show_pic(file_name=None, content=self.panel_pic)
+                    elif len(self.ellipse_points) == 2:
+                        self.ellipse_points.append(point)
+                        self.draw_ellipse(self.ellipse_points)
+                        if self.labelimg is not None:
+                            pic = self.draw_points()
+                            self.show_pic(file_name=None, content=pic)
+                        else:
+                            self.show_pic(file_name=None, content=self.panel_pic)
+                    else:
+                        self.ellipse_points = [point]
                 else:
                     raise NotImplementedError()
         elif ev.button() == Qt.RightButton:
@@ -226,7 +255,6 @@ class AppWindow(QMainWindow):
             elif self.state == STATE.DRAW_POLYGON:
                 pass
             elif self.state == STATE.DRAW_ELLIPSE:
-                # TODO draw ellipse
                 pass
             else:
                 raise NotImplementedError()
@@ -236,8 +264,33 @@ class AppWindow(QMainWindow):
             else:
                 self.show_pic(file_name=None, content=self.panel_pic)
 
-    def draw_ellipse(self, start_point, end_point):
-        pass
+    def draw_ellipse(self, points):
+        color_r, color_g, color_b = self.fill_color.red(), self.fill_color.green(), self.fill_color.blue()
+        points = list(map(lambda item:(int(item[0] * self.scale), int(item[1] * self.scale)), points))
+        p1 = np.array(points[0])
+        p2 = np.array(points[1])
+        if p1[0] > p2[0]:
+            p1, p2 = p2, p1
+        p3 = np.array(points[2])
+        center = tuple((p1 + p2) // 2)
+        r1 = int(np.linalg.norm(p1 - p2, 2) / 2)
+        a = p2[1] - p1[1]
+        b = p1[0] - p2[0]
+        c = p2[0] * p1[1] - p1[0] * p2[1]
+        r2 = int(np.abs(a * p3[0] + b * p3[1] + c) / np.sqrt(a ** 2 + b ** 2))
+        if r1 > r2:
+            theta = -1 * (np.arctan(a / b) * 180) / np.pi
+            self.panel_pic = cv.ellipse(self.cur_img.copy(), center, (r1, r2), theta, 0, 360, (color_r, color_g, color_b), 1)
+        else:
+            theta = (np.arctan(a / b) * 180) / np.pi
+            if theta > 0:
+                theta = 90 - theta
+            else:
+                theta = -90 - theta
+            self.panel_pic = cv.ellipse(self.cur_img.copy(), center, (r2, r1), theta, 0, 360,
+                                        (color_r, color_g, color_b), 1)
+
+
 
     def draw_lines(self, points, end=False):
         b, g, r = self.fill_color.blue(), self.fill_color.green(), self.fill_color.red()
@@ -368,13 +421,30 @@ class AppWindow(QMainWindow):
         height, width, _ = self.origin_img.shape
         self.cur_img = cv.resize(self.origin_img, (int(
             height * self.scale), int(width * self.scale)), cv.INTER_LINEAR)
-        if self.start_point is not None and self.end_point is not None:
-            self.draw_rect(self.start_point, self.end_point)
-            if self.labelimg is not None:
-                pic = self.draw_points()
-                self.show_pic(content=pic)
-            else:
-                self.show_pic(file_name=None, content=self.panel_pic)
+        if self.state == STATE.DRAW_RECTANGLE:
+            if self.start_point is not None and self.end_point is not None:
+                self.draw_rect(self.start_point, self.end_point)
+                if self.labelimg is not None:
+                    pic = self.draw_points()
+                    self.show_pic(content=pic)
+                else:
+                    self.show_pic(file_name=None, content=self.panel_pic)
+        elif self.state == STATE.DRAW_POLYGON:
+            if self.polygon_points is not None and self.polygon_points['finish'] is True:
+                self.draw_lines(self.polygon_points['points'], True)
+                if self.labelimg is not None:
+                    pic = self.draw_points()
+                    self.show_pic(content=pic)
+                else:
+                    self.show_pic(file_name=None, content=self.panel_pic)
+        elif self.state == STATE.DRAW_ELLIPSE:
+            if self.ellipse_points is not None and len(self.ellipse_points) == 3:
+                self.draw_ellipse(self.ellipse_points)
+                if self.labelimg is not None:
+                    pic = self.draw_points()
+                    self.show_pic(content=pic)
+                else:
+                    self.show_pic(file_name=None, content=self.panel_pic)
         elif self.labelimg is not None:
             self.panel_pic = self.cur_img.copy()
             pic = self.draw_points()
