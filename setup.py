@@ -37,7 +37,7 @@ def get_long_description():
 
 setup(
     name='labelseg',
-    version='0.0.3',
+    version='0.0.4',
     packages=find_packages(),
     description='label tool for semantic segmentation',
     long_description=get_long_description(),
